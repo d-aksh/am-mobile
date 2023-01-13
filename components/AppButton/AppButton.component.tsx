@@ -4,15 +4,17 @@ import AppButtonStyles from "./AppButton.styles";
 
 interface AppButtonProps {
   title: string;
+  onPress: () => void;
 }
 
-const AppButton = ({ title }: AppButtonProps) => {
+const AppButton = ({ title, onPress }: AppButtonProps) => {
   return (
     <Button
       style={AppButtonStyles.container}
       title={title}
       color="primary"
       variant="contained"
+      onPress={onPress}
     />
   );
 };

@@ -20,6 +20,12 @@ const LoginFormStyles = StyleSheet.create({
     color: "#808080",
     marginBottom: 40,
   },
+  input: {
+    width: 300,
+    height: 40,
+    backgroundColor: "#fff",
+    marginBottom: 50,
+  },
 });
 
 export default LoginFormStyles;
