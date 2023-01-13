@@ -12,9 +12,10 @@ const Input = ({ placeholder }: InputProps) => {
   return (
     <TextInput
       style={InputStyles.container}
-      label={placeholder}
+      placeholder={placeholder}
       onChangeText={(newText) => setText(newText)}
       defaultValue={text}
+      variant="standard"
     />
   );
 };
