@@ -20,7 +20,6 @@ const LoginForm = () => {
       console.log(response.data);
       ToastAndroid.show(
         "You are now logged in.",
-        ToastAndroid.BOTTOM,
         ToastAndroid.SHORT
       );
       setUsername("");
