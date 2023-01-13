@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, ToastAndroid } from "react-native";
 import { Text, TextInput } from "@react-native-material/core";
 
 import AppButton from "../AppButton/AppButton.component";
@@ -18,6 +18,11 @@ const LoginForm = () => {
     );
     if (response) {
       console.log(response.data);
+      ToastAndroid.show(
+        "You are now logged in.",
+        ToastAndroid.BOTTOM,
+        ToastAndroid.SHORT
+      );
       setUsername("");
       setPassword("");
     }
