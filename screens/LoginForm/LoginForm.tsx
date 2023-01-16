@@ -1,13 +1,14 @@
 import { View, Image, ToastAndroid } from "react-native";
 import { Text, TextInput } from "@react-native-material/core";
+import * as SecureStore from "expo-secure-store";
 
-import AppButton from "../AppButton/AppButton.component";
+import AppButton from "../../components/AppButton/AppButton.component";
 
 import LoginFormStyles from "./LoginForm.styles";
 import { useState } from "react";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 
-const LoginForm = () => {
+const LoginForm = ({ navigation }: any) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,11 +17,14 @@ const LoginForm = () => {
       username,
       password
     );
-    if (response) {
-      console.log(response.data);
+    if (response.data && response.status !== 401) {
+      SecureStore.setItemAsync("access", response.data.access);
+      SecureStore.setItemAsync("refresh", response.data.refresh);
       ToastAndroid.show("You are now logged in.", ToastAndroid.SHORT);
       setUsername("");
       setPassword("");
+      console.log(await SecureStore.getItemAsync("access"));
+      navigation.navigate("Product List");
     }
   };
 
