@@ -8,7 +8,7 @@ import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 
 import ProductListStyles from "./ProductList.styles";
 
-const ProductList = () => {
+const ProductList = ({ navigation }: any) => {
   interface Product {
     asset_name: string;
     company: string;
@@ -39,7 +39,11 @@ const ProductList = () => {
     >
       {products &&
         products.map((product: Product) => (
-          <Product key={product.serial_number} product={product} />
+          <Product
+            key={product.serial_number}
+            product={product}
+            navigation={navigation}
+          />
         ))}
     </ScrollView>
   );

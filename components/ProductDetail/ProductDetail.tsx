@@ -2,32 +2,29 @@ import { View, Image } from "react-native";
 import { Text, TextInput, Button } from "@react-native-material/core";
 import React from "react";
 
+import ProductDetailStyles from "./ProductDetail.styles";
+
 interface ProductDetailProps {
-  product?: {
-    asset_name: string;
-    company: string;
-    image_url: string;
-    model: string;
-    serial_number: string;
-    status: string;
-  };
   navigation?: any;
+  route?: any;
 }
 
-const ProductDetail: React.FC<ProductDetailProps> = ({
-  product,
-  navigation,
-}) => {
+const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
   {
+    const { product } = route.params;
     return product ? (
-      <View>
-        <Text>{product.asset_name}</Text>
-        <Image source={{ uri: `${product.image_url}` }} />
-        <TextInput />
+      <View style={ProductDetailStyles.container}>
+        <Text style={ProductDetailStyles.headline}>{product.asset_name}</Text>
+        <Image
+          source={{ uri: `${product.image_url}` }}
+          style={ProductDetailStyles.image}
+        />
+        <TextInput style={ProductDetailStyles.textbox} variant="outlined" />
         <Button
+          style={ProductDetailStyles.button}
           title="Submit"
           onPress={() => {
-            navigation.navigate("Product List");
+            navigation.push("Product List");
           }}
         />
       </View>

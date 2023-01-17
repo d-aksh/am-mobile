@@ -33,7 +33,7 @@ const Product = ({ product, navigation }: ProductProps) => {
         style={ProductStyles.button}
         title="Request"
         onPress={() => {
-          navigation.navigate("Product Detail");
+          navigation.navigate("Product Detail", { product });
         }}
       />
     </View>
