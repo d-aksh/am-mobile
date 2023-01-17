@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { View, Image } from "react-native";
-import { Text, ListItem } from "@react-native-material/core";
+import { Text, Button } from "@react-native-material/core";
 
 import ProductStyles from "./Product.styles";
 
@@ -12,19 +13,28 @@ interface ProductProps {
     serial_number: string;
     status: string;
   };
+  navigation?: any;
 }
 
-const Product = ({ product }: ProductProps) => {
-  const im_url = product.image_url;
+const Product = ({ product, navigation }: ProductProps) => {
+  const [visible, setVisible] = useState(false);
+
   return (
     <View style={ProductStyles.container}>
       <Text style={ProductStyles.headline}>{product.asset_name}</Text>
-      <Text style={ProductStyles.text}>{product.serial_number}</Text>
+      <Text style={ProductStyles.text}>{product.model}</Text>
       <Image
         source={{
-          uri: im_url,
+          uri: `${product.image_url}`,
         }}
         style={ProductStyles.image}
+      />
+      <Button
+        style={ProductStyles.button}
+        title="Request"
+        onPress={() => {
+          navigation.navigate("Product Detail");
+        }}
       />
     </View>
   );

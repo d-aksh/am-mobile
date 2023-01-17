@@ -11,6 +11,13 @@ const ProductStyles = StyleSheet.create({
     width: 350,
     alignContent: "center",
     justifyContent: "center",
+    shadowOffset: {
+      width: 2,
+      height: 18,
+    },
+    shadowOpacity: 1.58,
+    shadowRadius: 16.0,
+    elevation: 18,
   },
   image: {
     width: 250,
@@ -22,10 +29,15 @@ const ProductStyles = StyleSheet.create({
   headline: {
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 20,
     padding: 10,
     textDecorationLine: "underline",
     textTransform: "uppercase",
+  },
+  button: {
+    shadowOpacity: 1.58,
+    shadowRadius: 12.0,
+    elevation: 12,
   },
 });
 
