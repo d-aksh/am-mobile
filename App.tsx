@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LoginForm from "./screens/LoginForm/LoginForm";
 import ProductList from "./screens/ProductList/ProductList.component";
-import ProductDetail from "./components/ProductDetail/ProductDetail";
+import ProductDetail from "./screens/ProductDetail/ProductDetail";
 
 const stack = createNativeStackNavigator();
 
