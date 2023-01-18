@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { Button } from "@react-native-material/core";
 
-import * as SecureStore from "expo-secure-store";
+import authService from "../../services/auth.service";
+import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 
 import Product from "../../components/Product/Product.component";
-import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 
 import ProductListStyles from "./ProductList.styles";
 
@@ -22,7 +22,7 @@ const ProductList = ({ navigation }: any) => {
   const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
-    const token = await SecureStore.getItemAsync("access");
+    const token = await authService.getAuthToken();
     if (token) {
       const fetchedProducts = await createAPIEndpoint(ENDPOINTS.ASSET).fetchAll(
         token

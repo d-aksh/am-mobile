@@ -30,6 +30,12 @@ const MyDevices: React.FC = ({ navigation }: any) => {
 
   useEffect(() => {
     getAssetRequests();
+
+    const willRefetchOnFocus = navigation.addListener("focus", () => {
+      getAssetRequests();
+    });
+
+    return willRefetchOnFocus;
   }, [assetRequests]);
 
   const handleSubmit = async (id: string) => {

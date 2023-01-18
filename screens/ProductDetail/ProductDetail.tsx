@@ -2,10 +2,9 @@ import { View, Image, ToastAndroid } from "react-native";
 import { Text, TextInput, Button } from "@react-native-material/core";
 import { useState } from "react";
 
-import * as SecureStore from "expo-secure-store";
-
 import ProductDetailStyles from "./ProductDetail.styles";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
+import authService from "../../services/auth.service";
 
 interface ProductDetailProps {
   navigation?: any;
@@ -18,7 +17,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
     const [text, setText] = useState("");
 
     const handleSubmit = async () => {
-      const token = await SecureStore.getItemAsync("access");
+      const token = await authService.getAuthToken();
       if (token) {
         const response = await createAPIEndpoint(
           ENDPOINTS.ASSETREQUESTADD
@@ -31,12 +30,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
         );
         if (response) {
           navigation.goBack();
-          navigation.goBack();
-          navigation.navigate("Product List");
           ToastAndroid.show("Request submit successfully.", ToastAndroid.SHORT);
         }
       }
     };
+
     return product ? (
       <View style={ProductDetailStyles.container}>
         <Text style={ProductDetailStyles.headline}>{product.asset_name}</Text>
