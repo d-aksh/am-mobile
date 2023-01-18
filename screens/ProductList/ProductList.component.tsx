@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
+import { Button } from "@react-native-material/core";
 
 import * as SecureStore from "expo-secure-store";
 
@@ -20,16 +21,18 @@ const ProductList = ({ navigation }: any) => {
 
   const [products, setProducts] = useState([]);
 
+  const getProducts = async () => {
+    const token = await SecureStore.getItemAsync("access");
+    if (token) {
+      const fetchedProducts = await createAPIEndpoint(ENDPOINTS.ASSET).fetchAll(
+        token
+      );
+      setProducts(fetchedProducts.data.data);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      const token = await SecureStore.getItemAsync("access");
-      if (token) {
-        const fetchedProducts = await createAPIEndpoint(
-          ENDPOINTS.ASSET
-        ).fetchAll(token);
-        setProducts(fetchedProducts.data.data);
-      }
-    })();
+    getProducts();
   }, []);
 
   return (
@@ -37,6 +40,11 @@ const ProductList = ({ navigation }: any) => {
       contentContainerStyle={ProductListStyles.content}
       style={ProductListStyles.container}
     >
+      <Button
+        title="My Devices"
+        variant="text"
+        onPress={() => navigation.navigate("My Devices")}
+      />
       {products &&
         products.map((product: Product) => (
           <Product

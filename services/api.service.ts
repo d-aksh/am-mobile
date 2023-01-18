@@ -62,7 +62,7 @@ export const createAPIEndpoint = (endpoint: string) => {
     delete: (id: string, token: string) =>
       axios({
         method: "delete",
-        url: url + id,
+        url: url + id + "/",
         headers: {
           Authorization: `Bearer ${token}`,
         },
