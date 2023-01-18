@@ -33,6 +33,12 @@ const ProductList = ({ navigation }: any) => {
 
   useEffect(() => {
     getProducts();
+
+    const willRefetchOnFocus = navigation.addListener("focus", () => {
+      getProducts();
+    });
+
+    return willRefetchOnFocus;
   }, []);
 
   return (
@@ -44,6 +50,7 @@ const ProductList = ({ navigation }: any) => {
         title="My Devices"
         variant="text"
         onPress={() => navigation.navigate("My Devices")}
+        style={{ top: 0, left: 0 }}
       />
       {products &&
         products.map((product: Product) => (
