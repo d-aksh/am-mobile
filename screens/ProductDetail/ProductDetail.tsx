@@ -15,8 +15,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
   {
     const { product } = route.params;
     const [text, setText] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
+      setLoading(true);
       const token = await authService.getAuthToken();
       if (token) {
         const response = await createAPIEndpoint(
@@ -29,6 +31,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
           token
         );
         if (response) {
+          setLoading(false);
           navigation.goBack();
           ToastAndroid.show("Request submit successfully.", ToastAndroid.SHORT);
         }
@@ -55,6 +58,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
           style={ProductDetailStyles.button}
           title="Submit"
           onPress={handleSubmit}
+          loading={loading}
+          disabled={loading}
         />
       </View>
     ) : (

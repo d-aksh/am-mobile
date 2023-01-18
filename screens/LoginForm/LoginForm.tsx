@@ -10,6 +10,7 @@ import authService from "../../services/auth.service";
 const LoginForm = ({ navigation }: any) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const checkIfLoggedIn = async () => {
     const token = await authService.getAuthToken();
@@ -29,6 +30,7 @@ const LoginForm = ({ navigation }: any) => {
   }, []);
 
   const handleSubmit = async () => {
+    setLoading(true);
     authService
       .login(username, password)
       .then(() => {
@@ -36,6 +38,9 @@ const LoginForm = ({ navigation }: any) => {
         setPassword("");
         ToastAndroid.show("You are now logged in.", ToastAndroid.SHORT);
         navigation.navigate("Product List");
+      })
+      .then(() => {
+        setLoading(false);
       })
       .catch(() => {
         ToastAndroid.show("Invalid Credentials.", ToastAndroid.SHORT);
@@ -71,7 +76,7 @@ const LoginForm = ({ navigation }: any) => {
         secureTextEntry
         maxLength={32}
       />
-      <AppButton onPress={handleSubmit} title="Log in" />
+      <AppButton loading={loading} onPress={handleSubmit} title="Log in" />
     </View>
   );
 };

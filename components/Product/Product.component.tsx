@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Image } from "react-native";
 import { Text, Button } from "@react-native-material/core";
 
@@ -17,8 +16,6 @@ interface ProductProps {
 }
 
 const Product = ({ product, navigation }: ProductProps) => {
-  const [visible, setVisible] = useState(false);
-
   return (
     <View style={ProductStyles.container}>
       <Text style={ProductStyles.headline}>{product.asset_name}</Text>

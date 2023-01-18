@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, ScrollView, ToastAndroid } from "react-native";
-import { ListItem, IconButton, Button } from "@react-native-material/core";
+import { ListItem, Button } from "@react-native-material/core";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import * as SecureStore from "expo-secure-store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -19,6 +19,7 @@ interface AssetRequest {
 
 const MyDevices: React.FC = ({ navigation }: any) => {
   const [assetRequests, setAssetRequests] = useState([] as AssetRequest[]);
+  const [loading, setLoading] = useState(false);
 
   const getAssetRequests = async () => {
     const token = await SecureStore.getItemAsync("access");
@@ -41,12 +42,14 @@ const MyDevices: React.FC = ({ navigation }: any) => {
   }, []);
 
   const handleSubmit = async (id: string) => {
+    setLoading(true);
     const token = await SecureStore.getItemAsync("access");
     if (token) {
       createAPIEndpoint(ENDPOINTS.DELETEASSETREQUEST)
         .delete(id, token)
         .then(() => {
           getAssetRequests();
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     } else {
@@ -73,8 +76,9 @@ const MyDevices: React.FC = ({ navigation }: any) => {
           trailing={
             assetRequest.status.toLowerCase() === "pending"
               ? () => (
-                  <IconButton
-                    icon={(props) => (
+                  <Button
+                    title="X"
+                    leading={(props) => (
                       <Icon
                         name="delete"
                         {...props}
@@ -82,10 +86,14 @@ const MyDevices: React.FC = ({ navigation }: any) => {
                       />
                     )}
                     onPress={() => handleSubmit(assetRequest.id)}
+                    style={MyDevicesStyles.button}
+                    loading={loading}
+                    disabled={loading}
                   />
                 )
               : null
           }
+          style={MyDevicesStyles.container}
         />
       ))}
     </ScrollView>

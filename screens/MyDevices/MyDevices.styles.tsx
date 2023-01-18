@@ -4,6 +4,9 @@ const MyDevicesStyles = StyleSheet.create({
   container: {
     marginBottom: 20,
   },
+  button: {
+    marginRight: 20,
+  },
   icon: {
     color: "#d55",
   },

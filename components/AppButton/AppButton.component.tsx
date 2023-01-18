@@ -5,9 +5,10 @@ import AppButtonStyles from "./AppButton.styles";
 interface AppButtonProps {
   title: string;
   onPress: () => void;
+  loading: boolean;
 }
 
-const AppButton = ({ title, onPress }: AppButtonProps) => {
+const AppButton = ({ title, onPress, loading }: AppButtonProps) => {
   return (
     <Button
       style={AppButtonStyles.container}
@@ -15,6 +16,8 @@ const AppButton = ({ title, onPress }: AppButtonProps) => {
       color="primary"
       variant="contained"
       onPress={onPress}
+      loading={loading}
+      disabled={loading}
     />
   );
 };
