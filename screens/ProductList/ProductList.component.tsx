@@ -39,7 +39,7 @@ const ProductList = ({ navigation }: any) => {
     });
 
     return willRefetchOnFocus;
-  }, [products]);
+  }, []);
 
   return (
     <ScrollView

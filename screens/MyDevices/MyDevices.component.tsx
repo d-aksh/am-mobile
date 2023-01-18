@@ -36,7 +36,7 @@ const MyDevices: React.FC = ({ navigation }: any) => {
     });
 
     return willRefetchOnFocus;
-  }, [assetRequests]);
+  }, []);
 
   const handleSubmit = async (id: string) => {
     const token = await SecureStore.getItemAsync("access");
