@@ -8,6 +8,7 @@ import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import Product from "../../components/Product/Product.component";
 
 import ProductListStyles from "./ProductList.styles";
+import Menu from "../../components/Menu/Menu.component";
 
 const ProductList = ({ navigation }: any) => {
   interface Product {
@@ -49,12 +50,12 @@ const ProductList = ({ navigation }: any) => {
       contentContainerStyle={ProductListStyles.content}
       style={ProductListStyles.container}
     >
-      <Button
-        title="My Devices"
-        variant="text"
-        onPress={() => navigation.navigate("My Devices")}
-        style={{ top: 0, left: 0 }}
-      />
+      <Menu>
+        <Button
+          title="My Devices"
+          onPress={() => navigation.navigate("My Devices")}
+        />
+      </Menu>
       {products &&
         products.map((product: Product) => (
           <Product

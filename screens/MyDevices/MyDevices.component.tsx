@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { ScrollView, ToastAndroid } from "react-native";
-import { ListItem, IconButton } from "@react-native-material/core";
+import { View, ScrollView, ToastAndroid } from "react-native";
+import { ListItem, IconButton, Button } from "@react-native-material/core";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import * as SecureStore from "expo-secure-store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
+import Menu from "../../components/Menu/Menu.component";
 
 import MyDevicesStyles from "./MyDevices.styles";
 
@@ -54,7 +56,15 @@ const MyDevices: React.FC = ({ navigation }: any) => {
   };
 
   return (
-    <ScrollView onScroll={getAssetRequests}>
+    <ScrollView>
+      <View style={MyDevicesStyles.container}>
+        <Menu>
+          <Button
+            title="Product List"
+            onPress={() => navigation.navigate("Product List")}
+          />
+        </Menu>
+      </View>
       {assetRequests.map((assetRequest) => (
         <ListItem
           key={Math.random()}
