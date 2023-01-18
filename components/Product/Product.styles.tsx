@@ -20,8 +20,8 @@ const ProductStyles = StyleSheet.create({
     elevation: 18,
   },
   image: {
-    width: 250,
     height: 250,
+    padding: 20,
   },
   text: {
     textAlign: "center",
