@@ -32,6 +32,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ route, navigation }) => {
           navigation.goBack();
           ToastAndroid.show("Request submit successfully.", ToastAndroid.SHORT);
         }
+      } else {
+        navigation.navigate("Home");
+        ToastAndroid.show("Session Expired.", ToastAndroid.SHORT);
       }
     };
 

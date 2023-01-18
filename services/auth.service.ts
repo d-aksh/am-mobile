@@ -30,6 +30,7 @@ const authService = {
         if (response.data.access) return response.data.access;
       }
     }
+    tokenService.removeToken();
     return null;
   },
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, ToastAndroid } from "react-native";
 import { Button } from "@react-native-material/core";
 
 import authService from "../../services/auth.service";
@@ -28,6 +28,9 @@ const ProductList = ({ navigation }: any) => {
         token
       );
       setProducts(fetchedProducts.data.data);
+    } else {
+      navigation.navigate("Home");
+      ToastAndroid.show("Session Expired.", ToastAndroid.SHORT);
     }
   };
 

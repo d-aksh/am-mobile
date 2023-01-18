@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, ToastAndroid } from "react-native";
 import { ListItem, IconButton } from "@react-native-material/core";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import * as SecureStore from "expo-secure-store";
@@ -47,11 +47,14 @@ const MyDevices: React.FC = ({ navigation }: any) => {
           getAssetRequests();
         })
         .catch((err) => console.log(err));
+    } else {
+      navigation.navigate("Home");
+      ToastAndroid.show("Session Expired.", ToastAndroid.SHORT);
     }
   };
 
   return (
-    <View>
+    <ScrollView onScroll={getAssetRequests}>
       {assetRequests.map((assetRequest) => (
         <ListItem
           key={Math.random()}
@@ -75,7 +78,7 @@ const MyDevices: React.FC = ({ navigation }: any) => {
           }
         />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
