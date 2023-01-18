@@ -49,7 +49,6 @@ const tokenService = {
 
     if (refreshToken) {
       let { exp } = jwt_decode<any>(refreshToken);
-      console.log(exp);
 
       if (Date.now() >= exp * 1000) {
         return true;

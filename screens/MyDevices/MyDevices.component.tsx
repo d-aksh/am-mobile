@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { ListItem } from "@react-native-material/core";
+import { ListItem, IconButton } from "@react-native-material/core";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import * as SecureStore from "expo-secure-store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -41,13 +41,10 @@ const MyDevices: React.FC = ({ navigation }: any) => {
   const handleSubmit = async (id: string) => {
     const token = await SecureStore.getItemAsync("access");
     if (token) {
-      const response = await createAPIEndpoint(ENDPOINTS.DELETEASSETREQUEST)
+      createAPIEndpoint(ENDPOINTS.DELETEASSETREQUEST)
         .delete(id, token)
         .then(() => {
-          navigation.back();
-          navigation.back();
-          navigation.navigate("Product List");
-          navigation.navigate("My Devices");
+          getAssetRequests();
         })
         .catch((err) => console.log(err));
     }
@@ -60,14 +57,22 @@ const MyDevices: React.FC = ({ navigation }: any) => {
           key={Math.random()}
           title={`Serial: ${assetRequest.asset_id}`}
           secondaryText={`Remarks: ${assetRequest.remarks}`}
-          trailing={(props) => (
-            <Icon
-              name="delete"
-              {...props}
-              onPress={() => handleSubmit(assetRequest.id)}
-              style={MyDevicesStyles.icon}
-            />
-          )}
+          trailing={
+            assetRequest.status.toLowerCase() === "pending"
+              ? () => (
+                  <IconButton
+                    icon={(props) => (
+                      <Icon
+                        name="delete"
+                        {...props}
+                        style={MyDevicesStyles.icon}
+                      />
+                    )}
+                    onPress={() => handleSubmit(assetRequest.id)}
+                  />
+                )
+              : null
+          }
         />
       ))}
     </View>

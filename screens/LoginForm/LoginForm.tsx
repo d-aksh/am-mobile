@@ -13,7 +13,6 @@ const LoginForm = ({ navigation }: any) => {
 
   const checkIfLoggedIn = async () => {
     const token = await authService.getAuthToken();
-    console.log(token);
     if (token) {
       navigation.navigate("Product List");
     }
