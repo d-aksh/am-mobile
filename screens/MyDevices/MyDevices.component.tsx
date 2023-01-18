@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Avatar, ListItem, Text } from "@react-native-material/core";
+import { ListItem } from "@react-native-material/core";
 import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
 import * as SecureStore from "expo-secure-store";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -14,7 +14,6 @@ interface AssetRequest {
   remarks: "string";
   status: "string";
 }
-// remark, id, status, image
 
 const MyDevices: React.FC = ({ navigation }: any) => {
   const [assetRequests, setAssetRequests] = useState([] as AssetRequest[]);

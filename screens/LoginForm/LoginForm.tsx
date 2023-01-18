@@ -1,31 +1,48 @@
 import { View, Image, ToastAndroid } from "react-native";
 import { Text, TextInput } from "@react-native-material/core";
-import * as SecureStore from "expo-secure-store";
 
 import AppButton from "../../components/AppButton/AppButton.component";
 
 import LoginFormStyles from "./LoginForm.styles";
-import { useState } from "react";
-import { createAPIEndpoint, ENDPOINTS } from "../../services/api.service";
+import { useState, useEffect } from "react";
+import authService from "../../services/auth.service";
 
 const LoginForm = ({ navigation }: any) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async () => {
-    const response = await createAPIEndpoint(ENDPOINTS.GETTOKEN).login(
-      username,
-      password
-    );
-    if (response.data && response.status !== 401) {
-      SecureStore.setItemAsync("access", response.data.access);
-      SecureStore.setItemAsync("refresh", response.data.refresh);
-      ToastAndroid.show("You are now logged in.", ToastAndroid.SHORT);
-      setUsername("");
-      setPassword("");
-      console.log(await SecureStore.getItemAsync("access"));
+  const checkIfLoggedIn = async () => {
+    const token = await authService.getAuthToken();
+    console.log(token);
+    if (token) {
       navigation.navigate("Product List");
     }
+  };
+
+  useEffect(() => {
+    checkIfLoggedIn();
+
+    const willRefetchOnFocus = navigation.addListener("focus", () => {
+      checkIfLoggedIn();
+    });
+
+    return willRefetchOnFocus;
+  }, []);
+
+  const handleSubmit = async () => {
+    authService
+      .login(username, password)
+      .then(() => {
+        setUsername("");
+        setPassword("");
+        ToastAndroid.show("You are now logged in.", ToastAndroid.SHORT);
+        navigation.navigate("Product List");
+      })
+      .catch(() => {
+        ToastAndroid.show("Invalid Credentials.", ToastAndroid.SHORT);
+        setUsername("");
+        setPassword("");
+      });
   };
 
   return (
